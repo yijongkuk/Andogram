@@ -68,11 +68,13 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'taggit'
 ]
 LOCAL_APPS = [
     'andogram.users.apps.UsersAppConfig',
     # Your stuff: custom apps go here
-    'andogram.images.apps.ImagesConfig', 
+    'andogram.images.apps.ImagesConfig',
+    'andogram.notifications.apps.NotificationsConfig'
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
