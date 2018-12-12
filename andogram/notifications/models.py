@@ -9,7 +9,7 @@ class Notification(models.Model):
     TYPE_CHOICES = (
         ('like', 'Like'),
         ('comment', 'Comment'),
-        ('follow', 'Follow')
+        ('follow', 'Follow'),
     )
 
     from_user = models.ForeignKey(user_models.User, on_delete=models.CASCADE, related_name='from_user')
@@ -19,3 +19,10 @@ class Notification(models.Model):
     notification_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     image = models.ForeignKey(image_models.Image, on_delete=models.CASCADE, null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
+
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return 'From: {} - To: {}'.format(self.from_user, self.to_user)

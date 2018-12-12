@@ -21,6 +21,8 @@ class Notifications(APIView):
 
 def create_notification(from_user, to_user, notification_type, image = None, comment = None):
 
+    print(from_user, to_user, notification_type, image, comment)
+
     notification = models.Notification.objects.create(
         from_user=from_user,
         to_user=to_user,
