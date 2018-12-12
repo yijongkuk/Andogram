@@ -63,7 +63,9 @@ class UserProfile(APIView):
     def get_user(self, username):
         
         try:
-           found_user = models.User.objects.get(username=username)
+            found_user = models.User.objects.get(username=username)
+
+            return found_user
 
         except models.User.DoesNotExist:
 
@@ -121,7 +123,7 @@ class UserFollowers(APIView):
             return found_user
 
         except models.User.DoesNotExist:
- 
+
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user_followers = found_user.followers.all()
@@ -138,7 +140,9 @@ class UserFollowing(APIView):
 
         try:
             found_user = models.User.objects.get(username=username)
+
         except models.User.DoesNotExist:
+
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         user_following = found_user.following.all()
