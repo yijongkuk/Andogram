@@ -285,3 +285,11 @@ class ImageDetail(APIView):
             image.delete()
 
             return Response(status.HTTP_204_NO_CONTENT)
+
+
+
+class ChangePassword(APIView):
+
+    def put(self, request, username, format=None):
+
+        pass
