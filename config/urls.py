@@ -22,6 +22,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
     path("images/", include("andogram.images.urls", namespace="images")),
+    path("notifications/", include("andogram.notifications.urls", namespace="notifications")),
 ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

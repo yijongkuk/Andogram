@@ -5,8 +5,9 @@ from . import models
 @admin.register(models.Notification)
 class NotificationAdmin(admin.ModelAdmin):
     
-    passlist_dispaly = (
-        'creator',
+    list_display = (
+        'from_user',
         'to_user',
-        'notification_type'
+        'notification_type',
+        'image'
     )
