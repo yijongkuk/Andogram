@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from andogram.users import models as user_models
-from andogram. images import models as image_models
+from andogram.images import models as image_models
 
 
 class Notification(models.Model):
