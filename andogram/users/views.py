@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
 from andogram.notifications import views as notification_views
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from rest_auth.registration.views import SocialLoginView
+
 
 
 class ExploreUsers(APIView):
@@ -73,7 +76,7 @@ class UserProfile(APIView):
 
     def get(self, request, username, format=None):
         
-        found_user = self.get_user(username)
+        found_user = self.get_user(self, username)
         
         if found_user is None:
             
@@ -84,7 +87,7 @@ class UserProfile(APIView):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
-    def put(Self, request, username, format=None):
+    def put(self, request, username, format=None):
 
         user = request.user
         
@@ -216,3 +219,7 @@ class ChangePassword(APIView):
 
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
+
+
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
