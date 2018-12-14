@@ -288,6 +288,7 @@ module.exports = {
               importLoaders: 1,
               modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
+              camelCase: true,
             }),
           },
           // Opt-in support for SASS (using .scss or .sass extensions).
@@ -309,6 +310,7 @@ module.exports = {
                 importLoaders: 2,
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
+                camelCase: true,
               },
               'sass-loader'
             ),
