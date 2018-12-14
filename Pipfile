@@ -9,7 +9,7 @@ pylint = "*"
 [packages]
 pytz = "==2018.7"
 python-slugify = "==1.2.6"
-redis = ">=2.10.6,<3"
+redis = "<3,>=2.10.6"
 django-environ = "==0.4.5"
 django-model-utils = "==3.1.2"
 django-allauth = "==0.38.0"
@@ -39,6 +39,7 @@ django-taggit = "*"
 django-taggit-serializer = "*"
 djangorestframework-jwt = "*"
 django-rest-auth = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.6"
