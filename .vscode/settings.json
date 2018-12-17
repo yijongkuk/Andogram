@@ -2,4 +2,8 @@
     "python.linting.pylintEnabled": true,
     "git.ignoreLimitWarning": true,
     "python.pythonPath": "C:\\Users\\smile\\.virtualenvs\\Andogram-DB6qz_JN\\Scripts\\python.exe",
+  // I want my default to be 4, but JS/JSON to be 2
+  "editor.tabSize": 4,
+  "[javascript]": { "editor.tabSize": 2 },
+  "[json]": { "editor.tabSize": 2 },
 }
