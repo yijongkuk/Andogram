@@ -1,5 +1,5 @@
 const initialState = {
-  isLoggedId: localStorage.getItem("jwt")
+  isLoggedIn: localStorage.getItem("jwt")
 };
 
 function reducer(state = initialState, action) {

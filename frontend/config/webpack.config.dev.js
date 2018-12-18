@@ -44,11 +44,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     require.resolve('style-loader'),
     {
       loader: require.resolve('css-loader'),
-      options:{
-        cssOptions,
-        modules: true,
-        localIdentName: "[path][name]__[local]--[hash:base64:5]"
-      } 
+      options: cssOptions,
     },
     {
       // Options for PostCSS as we reference these options twice
@@ -268,8 +264,37 @@ module.exports = {
               // because it was compiled. Thus, we don't want the browser
               // debugger to show the original code. Instead, the code
               // being evaluated would be much more helpful.
-              sourceMaps: false,
+              sourceMaps: true,
             },
+          },
+          // Opt-in support for SASS (using .scss or .sass extensions).
+          // Chains the sass-loader with the css-loader and the style-loader
+          // to immediately apply all styles to the DOM.
+          // By default we support SASS Modules with the
+          // extensions .module.scss or .module.sass
+          {
+            test: sassRegex,
+            exclude: sassModuleRegex,
+            use: getStyleLoaders({ importLoaders: 1 }, 'sass-loader'),
+          },
+          // Adds support for CSS Modules, but using SASS
+          // using the extension .module.scss or .module.sass
+          {
+            test: sassModuleRegex,
+            use: getStyleLoaders(
+              {
+                importLoaders: 1,
+                modules: true,
+                getLocalIdent: getCSSModuleLocalIdent,
+                camelCase: true,
+              },
+              {
+                loader: require.resolve("sass-loader"),
+                options: {
+                  data: `@import "${paths.appSrc.replace(/\\/g, '/')}/config/_variables.scss";`
+                }
+              }
+            ),
           },
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -281,7 +306,7 @@ module.exports = {
             test: cssRegex,
             exclude: cssModuleRegex,
             use: getStyleLoaders({
-              importLoaders: 1,
+              importLoaders: 2,
             }),
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
@@ -289,40 +314,11 @@ module.exports = {
           {
             test: cssModuleRegex,
             use: getStyleLoaders({
-              importLoaders: 1,
+              importLoaders: 2,
               modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
               camelCase: true,
             }),
-          },
-          // Opt-in support for SASS (using .scss or .sass extensions).
-          // Chains the sass-loader with the css-loader and the style-loader
-          // to immediately apply all styles to the DOM.
-          // By default we support SASS Modules with the
-          // extensions .module.scss or .module.sass
-          {
-            test: sassRegex,
-            exclude: sassModuleRegex,
-            use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
-          },
-          // Adds support for CSS Modules, but using SASS
-          // using the extension .module.scss or .module.sass
-          {
-            test: sassModuleRegex,
-            use: getStyleLoaders(
-              {
-                importLoaders: 2,
-                modules: true,
-                getLocalIdent: getCSSModuleLocalIdent,
-                camelCase: true,
-              },
-              {
-                loader: require.resolve("sass-loader"),
-                options: {
-                  data: `@import "./config/_variables.scss";`
-                }
-              }
-            ),
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.

@@ -68,11 +68,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
     },
     {
       loader: require.resolve('css-loader'),
-      options: {
-        cssOptions,
-        modules: true,
-        localIdentName: "[path][name]__[local]--[hash:base64:5]"
-      }
+      options: cssOptions,
     },
     {
       // Options for PostCSS as we reference these options twice
@@ -364,6 +360,7 @@ module.exports = {
               importLoaders: 1,
               sourceMap: shouldUseSourceMap,
               modules: true,
+              camelCase: true,
               getLocalIdent: getCSSModuleLocalIdent,
             }),
           },
@@ -380,7 +377,12 @@ module.exports = {
                 importLoaders: 2,
                 sourceMap: shouldUseSourceMap,
               },
-              'sass-loader'
+              {
+                loader: require.resolve("sass-loader"),
+                options: {
+                  data: `@import "${paths.appSrc.replace(/\\/g, '/')}/config/_variables.scss";`
+                }
+              }
             ),
             // Don't consider CSS imports dead code even if the
             // containing package claims to have no side effects.
@@ -397,14 +399,10 @@ module.exports = {
                 importLoaders: 2,
                 sourceMap: shouldUseSourceMap,
                 modules: true,
+                camelCase: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               },
-              {
-                loader: require.resolve("sass-loader"),
-                options: {
-                  data: `@import "./config/_variables.scss";`
-                }
-              }
+              'sass-loader'
             ),
           },
           // "file" loader makes sure assets end up in the `build` folder.
